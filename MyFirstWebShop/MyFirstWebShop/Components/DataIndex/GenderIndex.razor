@@ -37,7 +37,9 @@ else
                 </tr>
             }
             <a href="/gender/edit" class="btn btn-primary">Add Gender</a>
-            <GenderSelect CallBack="Selection" genders="gendersDTO"/>
+            <GenderSelect CallBack="Selection" genders="@gendersDTO" />
+
+
         </tbody>
 
     </table>
@@ -50,7 +52,6 @@ else
     public int id { get; set; }
 
     private List<GenderSelectDTO>? gendersDTO;
-
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();

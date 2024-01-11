@@ -1,6 +1,7 @@
 ﻿@using MyFirstWebShop.Data.DTOs
 
-<select @onchange="OnSelectionChanged">
+@if(genders != null) {
+<select  @onchange="OnSelectionChanged">
     @if(genders != null)
     {
         foreach (var item in genders)
@@ -9,16 +10,15 @@
         }
     }
 </select>
+}
 
 <h3>GenderSelect</h3>
 
 @code {
     [Parameter]
-    public List<GenderSelectDTO> genders { get; set; } 
+    public List<GenderSelectDTO>? genders { get; set; } 
     [Parameter]
     public EventCallback<int> CallBack {get; set;}
-
-    private GenderSelectDTO SelectedItem {get; set; }
 
 
     private void OnSelectionChanged(ChangeEventArgs e)
@@ -26,4 +26,5 @@
         int id = int.Parse(e.Value.ToString());
         CallBack.InvokeAsync(id);
     }
+
 }
