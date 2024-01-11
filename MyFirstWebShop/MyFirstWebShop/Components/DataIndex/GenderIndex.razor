@@ -1,5 +1,6 @@
 ﻿@page "/gender"
 @page "/gender/{id:int?}"
+
 @using MyFirstWebShop.Data.DTOs
 @using MyFirstWebShop.Services
 @rendermode InteractiveServer
@@ -36,13 +37,14 @@ else
                     </td>
                 </tr>
             }
-            <a href="/gender/edit" class="btn btn-primary">Add Gender</a>
-            <GenderSelect CallBack="Selection" genders="@gendersDTO" />
-
 
         </tbody>
 
     </table>
+
+    <a href="/gender/edit" class="btn btn-primary">Add Gender</a>
+    <GenderSelect CallBack="Selection" genders="@gendersDTO" />
+
 }
 
 

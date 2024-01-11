@@ -16,19 +16,19 @@ namespace MyFirstWebShop.Data.Entity
         [Required, StringLength(50)]
         public string LastName { get; set; }
 
-
         public DateTime Birthday { get; set; }
 
         public int GernderID { get; set; }
 
-        public int PaymentConditionID { get; set; }
+        [DeleteBehavior(DeleteBehavior.Restrict)]
+        public virtual Gender Gender { get; set; }
 
+        public int PaymentConditionID { get; set; }
 
         [Column(TypeName = "decimal(5,4)")]
         public decimal Discount {  get; set; }
 
-        [DeleteBehavior(DeleteBehavior.Restrict)]
-        public virtual Gender Gender { get; set; }
+        
 
     }
 }

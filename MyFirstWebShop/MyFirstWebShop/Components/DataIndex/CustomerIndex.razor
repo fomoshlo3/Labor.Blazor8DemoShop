@@ -1,0 +1,65 @@
+﻿@page "/customer"
+@page "/customer/{id:int?}"
+
+@using MyFirstWebShop.Data.DTOs
+@using MyFirstWebShop.Services
+
+@inject UnitOfWork UnitOfOwork
+
+<PageTitle>Customer Index</PageTitle>
+
+
+@if (customerDetailDTOs == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Gender</th>
+            <th>Birthday</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach(var content in customerDetailDTOs)
+            {
+                <tr class="@(content.CustomerId == id ? "table-primary" : "")">
+                    <td>@content.CustomerId</td>
+                    <td>@content.GenderName</td>
+                    <td>@content.GenderName</td>
+                    <td>@content.Birthday.Value.ToString("DD.MM.YYYY")</td>
+                    <td>
+                        <a href="/Customer/Edit/@content.GenderId" class="btn btn-primary btn-sm">Edit</a>
+                        <button @onclick="() => OnDeleteClick(content)" class="btn btn-secondary btn-sm">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+</table>
+}
+
+
+@code {
+
+    [Parameter]
+    public int id { get; set; }
+
+    private List<CustomerDetailDTO> customerDetailDTOs { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+
+        customerDetailDTOs = await UnitOfOwork.CustomerService.GetAllCustomerDetailDTOsAsync();
+    }
+
+    private void OnDeleteClick(CustomerDetailDTO customer)
+    {
+        
+    }
+}
