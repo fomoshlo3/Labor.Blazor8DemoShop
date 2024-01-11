@@ -1,0 +1,90 @@
+﻿@page "/gender/edit/{id:int?}"
+@page "/gender/edit"
+
+@attribute [Authorize]
+
+@using Microsoft.AspNetCore.Authorization
+@using MyFirstWebShop.Data.DTOs
+@using MyFirstWebShop.Services
+
+@inject UnitOfWork Unitofwork
+@inject NavigationManager navManager
+
+@rendermode InteractiveServer
+
+<h3>@title</h3>
+
+@if (genderDTO != null)
+{
+    <EditForm Model="genderDTO" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="col-md-12 mb-3">
+            <label for="Title">Gender Title</label>
+            <InputText id="Title" @bind-Value="genderDTO.Title" class="form-control" />
+            <ValidationMessage For="@(() => genderDTO.Title)" />
+        </div>
+        <div class="col-md-12 mb-3">
+            <label for="Note">Gender Notes</label>
+            <InputText id="Note" @bind-Value="genderDTO.Notes" class="form-control" />
+            <ValidationMessage For="@(() => genderDTO.Notes)" />
+        </div>
+        <div class="col-md-12 mb-3">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" class="btn btn-secondary" @onclick="OnCancelClick">Cancel</button>
+        </div>
+
+    </EditForm>
+
+}
+
+
+@code {
+    [Parameter]
+    public int? id { get; set; }
+
+    private string title = "";
+    private GenderDetailDTO? genderDTO;
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        if (id == null)
+        {
+            title = "Create";
+            genderDTO = new();
+        }
+        else
+        {
+            title = "Edit";
+            genderDTO = await Unitofwork.GenderService.GetGenderDetailDTOByIdAsync((int)id);
+        }
+
+    }
+
+    private void OnValidSubmit()
+    {
+        if (id == null)
+        {
+            Unitofwork.GenderService.AddGender(genderDTO);
+            Unitofwork.Commit();
+            navManager.NavigateTo("/gender");
+        }
+        else
+        {
+            Unitofwork.GenderService.UpdateGender(genderDTO);
+            Unitofwork.Commit();
+            navManager.NavigateTo("/gender/" + id);
+        }
+        
+
+    }
+
+    private void OnInValidSubmit()
+    {
+    }
+
+    private void OnCancelClick()
+    {
+        navManager.NavigateTo("/gender");
+    }
+}

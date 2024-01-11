@@ -1,0 +1,76 @@
+﻿@page "/gender"
+@page "/gender/{id:int?}"
+@using MyFirstWebShop.Data.DTOs
+@using MyFirstWebShop.Services
+@rendermode InteractiveServer
+
+@inject UnitOfWork UnitOfOwork
+@inject IJSRuntime JS
+
+<h3>Gender Overview</h3>
+
+
+@if(gendersDTO == null)
+{
+    <p>Loading....</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in gendersDTO)
+            {
+                <tr class="@(item.GenderId == id ? "table-primary" : "" )">
+                    <td>@item.GenderId</td>
+                    <td>@item.Title</td>
+                    <td>
+                        <a href="/gender/edit/@item.GenderId" class="btn btn-primary btn-sm">Edit</a>
+                        <button @onclick="() => OnDeleteClick(item)" class="btn btn-secondary btn-sm">Remove</button>
+                    </td>
+                </tr>
+            }
+            <a href="/gender/edit" class="btn btn-primary">Add Gender</a>
+            
+        </tbody>
+
+    </table>
+}
+
+
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private List<GenderSelectDTO>? gendersDTO;
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        gendersDTO = await UnitOfOwork.GenderService.GetAllGenderSelectDTOAsync();
+    }
+
+    private async Task OnDeleteClick(GenderSelectDTO item)
+    {
+        if (await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?"))
+        {
+            RemoveGender(item);
+        }
+    }
+
+    private async Task RemoveGender(GenderSelectDTO item)
+    {
+        UnitOfOwork.GenderService.DeleteGenderById(item.GenderId);
+        gendersDTO.Remove(item);
+        await UnitOfOwork.Commit();
+    }
+
+}
