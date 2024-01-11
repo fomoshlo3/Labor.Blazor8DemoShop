@@ -1,0 +1,29 @@
+﻿@using MyFirstWebShop.Data.DTOs
+
+<select @onchange="OnSelectionChanged">
+    @if(genders != null)
+    {
+        foreach (var item in genders)
+        {
+            <option value="@item.GenderId">@item.Title</option>
+        }
+    }
+</select>
+
+<h3>GenderSelect</h3>
+
+@code {
+    [Parameter]
+    public List<GenderSelectDTO> genders { get; set; } 
+    [Parameter]
+    public EventCallback<int> CallBack {get; set;}
+
+    private GenderSelectDTO SelectedItem {get; set; }
+
+
+    private void OnSelectionChanged(ChangeEventArgs e)
+    {
+        int id = int.Parse(e.Value.ToString());
+        CallBack.InvokeAsync(id);
+    }
+}

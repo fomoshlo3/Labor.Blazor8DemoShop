@@ -37,7 +37,7 @@ else
                 </tr>
             }
             <a href="/gender/edit" class="btn btn-primary">Add Gender</a>
-            
+            <GenderSelect CallBack="Selection" genders="gendersDTO"/>
         </tbody>
 
     </table>
@@ -64,6 +64,10 @@ else
         {
             RemoveGender(item);
         }
+    }
+    private void Selection(int id)
+    {
+        this.id = id;
     }
 
     private async Task RemoveGender(GenderSelectDTO item)

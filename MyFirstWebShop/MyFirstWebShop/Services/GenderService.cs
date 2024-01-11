@@ -61,6 +61,17 @@ namespace MyFirstWebShop.Services
                           }).FirstOrDefaultAsync();
         }
 
+        public GenderSelectDTO? GetGenderSelectDTOById(int id)
+        {
+            return (from x in _context.Genders
+                    where x.GenderId == id
+                    select new GenderSelectDTO()
+                    {
+                        GenderId = x.GenderId,
+                        Title = x.Title,
+                    }).FirstOrDefault();
+        }
+
         public void UpdateGender(GenderDetailDTO gender)
         {
 
