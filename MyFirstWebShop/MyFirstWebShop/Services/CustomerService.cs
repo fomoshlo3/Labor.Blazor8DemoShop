@@ -13,7 +13,23 @@ namespace MyFirstWebShop.Services
         }
         public void AddCustomer(CustomerDetailDTO customer)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (_context)
+                {
+                    new Customer
+                    {
+                        CustomerId = customer.CustomerId,
+                        Birthday = customer.Birthday,
+                        
+                    };
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void DeleteCustomer(int id)

@@ -11,21 +11,22 @@ namespace MyFirstWebShop.Data.Entity
         public int CustomerId { get; set; }
 
         [StringLength(50)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [Required, StringLength(50)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
-        public DateTime Birthday { get; set; }
+        public DateOnly Birthday { get; set; }
 
-        public int GernderID { get; set; }
+        public int GenderID { get; set; }
 
         [DeleteBehavior(DeleteBehavior.Restrict)]
         public virtual Gender Gender { get; set; }
 
         public int PaymentConditionID { get; set; }
 
-        [Column(TypeName = "decimal(5,4)")]
+        [Column(TypeName = "decimal(5,4)"), 
+         Range(0, 1)]
         public decimal Discount {  get; set; }
 
         

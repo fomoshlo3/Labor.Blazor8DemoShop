@@ -15,7 +15,7 @@ namespace MyFirstWebShop.Data.Entity
         public string? Notes { get; set; }
 
 
-        public ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
 
 

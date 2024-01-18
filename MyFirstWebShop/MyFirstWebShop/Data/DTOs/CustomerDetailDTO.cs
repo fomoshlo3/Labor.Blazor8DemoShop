@@ -6,7 +6,7 @@
 
         public string CustomerName { get; set; } = string.Empty;
 
-        public DateOnly? Birthday { get; set; }
+        public DateOnly Birthday { get; set; }
 
         public int GenderId { get; set; }
 

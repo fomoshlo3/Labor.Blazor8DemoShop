@@ -10,5 +10,6 @@ namespace MyFirstWebShop.Data
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<OrderPosition> OrderPositions { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }
