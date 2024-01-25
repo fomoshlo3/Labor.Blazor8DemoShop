@@ -65,7 +65,7 @@ else
     {
         if (await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete this item?"))
         {
-            RemoveGender(item);
+            await RemoveGender(item);
         }
     }
     private void Selection(int id)
@@ -76,7 +76,7 @@ else
     private async Task RemoveGender(GenderSelectDTO item)
     {
         UnitOfOwork.GenderService.DeleteGenderById(item.GenderId);
-        gendersDTO.Remove(item);
+        gendersDTO?.Remove(item);
         await UnitOfOwork.Commit();
     }
 

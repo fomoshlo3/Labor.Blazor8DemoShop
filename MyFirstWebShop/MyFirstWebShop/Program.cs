@@ -42,9 +42,13 @@ namespace MyFirstWebShop
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<IGenderService, GenderService>();
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
             builder.Services.AddTransient<UnitOfWork>();
+
+            
 
             var app = builder.Build();
 

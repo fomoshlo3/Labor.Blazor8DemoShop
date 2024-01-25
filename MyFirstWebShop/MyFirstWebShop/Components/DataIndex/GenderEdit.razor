@@ -66,13 +66,13 @@
         if (id == null)
         {
             Unitofwork.GenderService.AddGender(genderDTO);
-            Unitofwork.Commit();
+            Unitofwork.Commit().ConfigureAwait(true);
             navManager.NavigateTo("/gender");
         }
         else
         {
             Unitofwork.GenderService.UpdateGender(genderDTO);
-            Unitofwork.Commit();
+            Unitofwork.Commit().ConfigureAwait(true);
             navManager.NavigateTo("/gender/" + id);
         }
         

@@ -11,7 +11,6 @@ namespace MyFirstWebShop.Data
 
         [StringLength(50)]
         public string? LName { get; set; }
-
     }
 
 }

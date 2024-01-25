@@ -13,28 +13,22 @@ namespace MyFirstWebShop.Services
         }
         public void AddCustomer(CustomerDetailDTO customer)
         {
-            try
+            _context.Customers.Add(new Customer
             {
-                using (_context)
-                {
-                    new Customer
-                    {
-                        CustomerId = customer.CustomerId,
-                        Birthday = customer.Birthday,
-                        
-                    };
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+                CustomerId = customer.CustomerId,
+                FirstName = customer.CustomerName.Split(" ")[0],
+                LastName = customer.CustomerName.Split(" ")[1],
+                Birthday = customer.Birthday,
+                GenderID = customer.GenderId,
+            });
         }
 
         public void DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            var toDelete = _context.Customers.Find(id);
+            if (toDelete != null)
+
+            _context.Customers.Remove(toDelete);
         }
 
         public Task<List<CustomerDetailDTO>> GetAllCustomerDetailDTOsAsync()

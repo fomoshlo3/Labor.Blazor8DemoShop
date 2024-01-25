@@ -9,6 +9,7 @@ namespace MyFirstWebShop.Services
         private GenderService? _genderService = null;
         private CustomerService? _customerService = null;
 
+        //Note : this call is funny, cause it only gets the service if needed, alas when there is none
         public GenderService GenderService => _genderService ??= new GenderService(_context);
         public CustomerService CustomerService => _customerService ??= new CustomerService(_context);
 
@@ -16,7 +17,6 @@ namespace MyFirstWebShop.Services
         {
             _context = context;
         }
-
 
 
         public async Task<int> Commit()
